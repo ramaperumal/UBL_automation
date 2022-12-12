@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="DOTC Smoke Test" parallel="methods" verbose="2"
-	configfailurepolicy="continue" thread-count="100">
+<suite name="DOTC Smoke Test"  verbose="2" configfailurepolicy="continue">
 	<listeners>
 		<listener
 			class-name="com.DOTC.supportLibraries.AnnotationTransformer" />
@@ -9,7 +8,7 @@
 		<listener
 			class-name="com.DOTC.supportLibraries.WebDriverListener" />
 	</listeners>
-	<test name="List1 tests">
+	<test name="List1 tests" parallel="methods" thread-count="100">
 		<parameter name="ExecutionMode" value="SAUCELABS" />
 		<classes>
 			<class name="com.DOTC.TestNGrunners.SequencialTests" />
