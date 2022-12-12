@@ -11,7 +11,7 @@
 	<test name="List1 tests" parallel="methods" thread-count="100">
 		<parameter name="ExecutionMode" value="SAUCELABS" />
 		<classes>
-			<class name="com.DOTC.TestNGrunners.SequencialTests" />
+			<!-- <class name="com.DOTC.TestNGrunners.SequencialTests" /> -->
 			<class name="com.DOTC.TestNGrunners.US1271049_DOTC_Application_URL_can_be_accessed_only_via_SSO" />
 	    	<class name="com.DOTC.TestNGrunners.US1268475_Duplicateballots" /> 
 		</classes>
