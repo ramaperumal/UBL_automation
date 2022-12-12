@@ -1,16 +1,15 @@
-package com.DOTC.TestNGrunners;
+package com.DOTC.TestNGrunnersParallel;
 
 import java.io.File;
 import java.io.IOException;
-
 import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 
 import com.DOTC.pageObjects.DOTCJsonXmlPath;
 import com.DOTC.pageObjects.DOTCRestService;
+import com.DOTC.supportLibraries.ExtentManager;
 import com.DOTC.supportLibraries.TestData;
 import com.DOTC.supportLibraries.TimeStamp;
 import com.DOTC.supportLibraries.Util;
@@ -34,27 +33,33 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
 
 
 @CucumberOptions(
-
-		 features = "src/test/resources/features", glue = { "com.DOTC.stepDefinitions" }, tags= {"@Uat"},
-
+		 features = "src/test/resources/features/US1268416_Calendar.feature", glue = { "com.DOTC.stepDefinitions" },
 						monochrome = true,  plugin = { "pretty", "pretty:target/cucumber-report/Smoke/pretty.txt",
 						"html:target/cucumber-report/Smoke", "json:target/cucumber-report/Smoke/cucumber.json",
 						"junit:target/cucumber-report/Smoke/cucumber-junitreport.xml",
 						//"io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm"})
 						"ru.yandex.qatools.allure.cucumberjvm.AllureReporter"})
-		
 
-public class DOTC_SmokeTest extends AbstractTestNGCucumberTests {
+public class US1268416_Calendar extends AbstractTestNGCucumberTests {
 	public static String[] arrEmployee = null;
-	
-	boolean isExecuted=true; 
-	
+	boolean isExecuted=true;  // sometimes filter makes this not being executed and no need to generate report
 	@AfterTest(alwaysRun=true)
 	private void test() {
-		generateCustomReports();
-		copyReportsFolder();
+		if (isExecuted) {
+			generateCustomReports();
+			copyReportsFolder();
+		}
 	}
-
+	
+	@Override
+    @DataProvider(parallel = true)
+	public Object[][] features() {
+		Object[][] ret = super.features();
+		if (ret == null || ret.length < 1)
+			isExecuted = false;
+		return ret;
+    }
+	
 	private void generateCustomReports() {
 
 		CucumberResultsOverview overviewReports = new CucumberResultsOverview();
@@ -133,21 +138,25 @@ public class DOTC_SmokeTest extends AbstractTestNGCucumberTests {
 		}
 	}
 	
-	/*@BeforeSuite()
-	private void getEmpIDWithBase() {
-		try {
-			DOTCRestService dotc = new DOTCRestService();
-			dotc.getBaseAirportList();
-			for(String base: TestData.listOfBaseAirport)
-				dotc.getLHids(base);
-		} catch(Exception ex) {
-			ex.printStackTrace();
-		}
-	}*/
-	
+
 	@AfterSuite
 	private void copyStoredReports() {
-		// Any customizations after execution can be added here
+		try {
+			String strFilePath = ExtentManager.getReportPath();
+			String workingDir = System.getProperty("user.dir");
+			String destFile = "";
+			System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "");
+			if (System.getProperty("os.name").toLowerCase().contains("win")) {
+				destFile = workingDir + "\\ExtentReports\\ExtentReport.html";
+			}
+			else {
+				destFile = workingDir + "/ExtentReports/ExtentReport.html";
+			}
+			FileUtils.copyFile(new File(strFilePath), new File(destFile));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

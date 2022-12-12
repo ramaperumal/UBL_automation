@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="DOTC Smoke Test" parallel="tests" verbose="2"
+<suite name="DOTC Smoke Test" parallel="methods" verbose="2"
 	configfailurepolicy="continue" thread-count="100">
 	<listeners>
 		<listener
@@ -11,8 +11,11 @@
 	</listeners>
 	<test name="List1 tests">
 		<parameter name="ExecutionMode" value="SAUCELABS" />
-		<classes>
+		<!-- <classes>
 			<class name="com.DOTC.TestNGrunners.SequencialTests" />
-		</classes>
+		</classes>  -->
+		<packages>
+			<package name="com/DOTC/TestNGrunnersParallel"/>
+		</packages>
 	</test>
 </suite>

@@ -1,13 +1,10 @@
-package com.DOTC.TestNGrunners;
+package com.DOTC.TestNGrunnersParallel;
 
 import java.io.File;
 import java.io.IOException;
-
 import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.DataProvider;
 
 import com.DOTC.pageObjects.DOTCJsonXmlPath;
 import com.DOTC.pageObjects.DOTCRestService;
@@ -35,7 +32,7 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
 
 @CucumberOptions(
 
-		 features = "src/test/resources/features", glue = { "com.DOTC.stepDefinitions" }, tags= {"@Uat"},
+		 features = "src/test/resources/features/US1368462_SaveASequenceFromSearch.feature", glue = { "com.DOTC.stepDefinitions" }, 
 
 						monochrome = true,  plugin = { "pretty", "pretty:target/cucumber-report/Smoke/pretty.txt",
 						"html:target/cucumber-report/Smoke", "json:target/cucumber-report/Smoke/cucumber.json",
@@ -44,10 +41,8 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
 						"ru.yandex.qatools.allure.cucumberjvm.AllureReporter"})
 		
 
-public class DOTC_SmokeTest extends AbstractTestNGCucumberTests {
+public class US1368462_SaveASequenceFromSearch extends AbstractTestNGCucumberTests {
 	public static String[] arrEmployee = null;
-	
-	boolean isExecuted=true; 
 	
 	@AfterTest(alwaysRun=true)
 	private void test() {
@@ -133,18 +128,7 @@ public class DOTC_SmokeTest extends AbstractTestNGCucumberTests {
 		}
 	}
 	
-	/*@BeforeSuite()
-	private void getEmpIDWithBase() {
-		try {
-			DOTCRestService dotc = new DOTCRestService();
-			dotc.getBaseAirportList();
-			for(String base: TestData.listOfBaseAirport)
-				dotc.getLHids(base);
-		} catch(Exception ex) {
-			ex.printStackTrace();
-		}
-	}*/
-	
+
 	@AfterSuite
 	private void copyStoredReports() {
 		// Any customizations after execution can be added here
