@@ -1,0 +1,756 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com</groupId>
+	<artifactId>PilotTechAutomation</artifactId>
+	<name>Craft Cucumber TestNG Framework</name>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+	<url>http://maven.apache.org</url>
+
+	<repositories>
+		<repository>
+			<id>apt-pilotTech-dependency</id>
+			<url>https://nexusread.aa.com/repository/releases/</url>
+		</repository>
+		<repository>
+			<id>central</id>
+			<layout>default</layout>
+			<url>https://nexusread.aa.com/repository/maven-public/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>Public Repositories</id>
+			<url>https://nexusread.aa.com/repository/maven-public/</url>
+		</repository>
+		<repository>
+			<id>Experitest.repo1</id>
+			<url>http://repo.experitest.com:8010/Maven2/</url>
+		</repository>
+		<!-- repository for appcenter -->
+		<repository>
+			<id>jcenter</id>
+			<url>https://jcenter.bintray.com/</url>
+		</repository>
+
+
+
+
+	</repositories>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<source.and.target.JVM.version>11</source.and.target.JVM.version>
+		<org.apache.maven.plugins.maven-compiler-plugin.version>3.5</org.apache.maven.plugins.maven-compiler-plugin.version>
+		<org.apache.maven.plugins.maven-surefire-plugin.version>2.20</org.apache.maven.plugins.maven-surefire-plugin.version>
+		<org.codehaus.mojo.exec-maven-plugin.version>1.6.0</org.codehaus.mojo.exec-maven-plugin.version>
+		<aspectj.version>1.9.1</aspectj.version>
+		<allure.version>1.5.2</allure.version>
+
+
+		<!-- following added for appcenter compatibility -->
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+		<migratory.publisher.version>1.0</migratory.publisher.version>
+	</properties>
+
+	<profiles>
+		<!-- to run one of the profiles defined below, simply add -P name_of_the_profile 
+			to mvn command ie.: mvn clean test -P runTestsInIos -->
+
+
+		<profile>
+			<id>Smoke</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<testNG.suiteXmlFile>src/test/resources/DOTC_SmokeTest.xml</testNG.suiteXmlFile>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>${org.apache.maven.plugins.maven-compiler-plugin.version}</version>
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<source>${source.and.target.JVM.version}</source>
+							<target>${source.and.target.JVM.version}</target>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>${org.apache.maven.plugins.maven-surefire-plugin.version}</version>
+						<configuration>
+							<suiteXmlFiles>
+								<suiteXmlFile>src/test/resources/DOTC_SmokeTest.xml</suiteXmlFile>
+							</suiteXmlFiles>
+							<argLine>
+								-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+							</argLine>
+							<!-- Remember to set the testFailureIgnore set to true if you want 
+								to run cucumber.jvm.parallel.JSReportMergerer even if some of the tests failed. -->
+							<testFailureIgnore>false</testFailureIgnore>
+							<parallel>methods</parallel>
+							<useUnlimitedThreads>true</useUnlimitedThreads>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>org.aspectj</groupId>
+								<artifactId>aspectjweaver</artifactId>
+								<version>${aspectj.version}</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+			<reporting>
+				<excludeDefaults>true</excludeDefaults>
+				<plugins>
+					<plugin>
+						<groupId>ru.yandex.qatools.allure</groupId>
+						<artifactId>allure-maven-plugin</artifactId>
+						<version>2.5</version>
+						<configuration>
+							<reportDirectory> ${project.build.directory}/site/allure-results</reportDirectory>
+
+							<!-- <resultsDirectory></resultsDirectory> -->
+
+						</configuration>
+
+					</plugin>
+				</plugins>
+			</reporting>
+		</profile>
+		<profile>
+			<id>temp</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<testNG.suiteXmlFile>src/test/resources/temp.xml</testNG.suiteXmlFile>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>${org.apache.maven.plugins.maven-compiler-plugin.version}</version>
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<source>${source.and.target.JVM.version}</source>
+							<target>${source.and.target.JVM.version}</target>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>${org.apache.maven.plugins.maven-surefire-plugin.version}</version>
+						<configuration>
+							<suiteXmlFiles>
+								<suiteXmlFile>src/test/resources/temp.xml</suiteXmlFile>
+							</suiteXmlFiles>
+							<argLine>
+								-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+							</argLine>
+							<!-- Remember to set the testFailureIgnore set to true if you want 
+								to run cucumber.jvm.parallel.JSReportMergerer even if some of the tests failed. -->
+							<testFailureIgnore>true</testFailureIgnore>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>org.aspectj</groupId>
+								<artifactId>aspectjweaver</artifactId>
+								<version>${aspectj.version}</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+			<reporting>
+				<excludeDefaults>true</excludeDefaults>
+				<plugins>
+					<plugin>
+						<groupId>ru.yandex.qatools.allure</groupId>
+						<artifactId>allure-maven-plugin</artifactId>
+						<version>2.5</version>
+						<configuration>
+							<reportDirectory> ${project.build.directory}/site/allure-results</reportDirectory>
+
+							<!-- <resultsDirectory></resultsDirectory> -->
+
+						</configuration>
+
+					</plugin>
+				</plugins>
+			</reporting>
+		</profile>
+
+		<profile>
+			<id>runTestsInSmokeiOS</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<testNG.suiteXmlFile>src/test/resources/TestNGRunSmokeTestiOS.xml</testNG.suiteXmlFile>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>${org.apache.maven.plugins.maven-compiler-plugin.version}</version>
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<source>${source.and.target.JVM.version}</source>
+							<target>${source.and.target.JVM.version}</target>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>${org.apache.maven.plugins.maven-surefire-plugin.version}</version>
+						<configuration>
+							<suiteXmlFiles>
+								<suiteXmlFile>src/test/resources/TestNGRunSmokeTestiOS.xml</suiteXmlFile>
+							</suiteXmlFiles>
+							<argLine>
+								-javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+							</argLine>
+							<!-- Remember to set the testFailureIgnore set to true if you want 
+								to run cucumber.jvm.parallel.JSReportMergerer even if some of the tests failed. -->
+							<testFailureIgnore>true</testFailureIgnore>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>org.aspectj</groupId>
+								<artifactId>aspectjweaver</artifactId>
+								<version>${aspectj.version}</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+			<reporting>
+				<excludeDefaults>true</excludeDefaults>
+				<plugins>
+					<plugin>
+						<groupId>ru.yandex.qatools.allure</groupId>
+						<artifactId>allure-maven-plugin</artifactId>
+						<version>2.5</version>
+					</plugin>
+				</plugins>
+			</reporting>
+		</profile>
+
+		<profile>
+			<id>Regression</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<testNG.suiteXmlFile>src/test/resources/TestNGRunRegressionTest.xml</testNG.suiteXmlFile>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>${org.apache.maven.plugins.maven-compiler-plugin.version}</version>
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<source>${source.and.target.JVM.version}</source>
+							<target>${source.and.target.JVM.version}</target>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>${org.apache.maven.plugins.maven-surefire-plugin.version}</version>
+						<configuration>
+							<suiteXmlFiles>
+								<suiteXmlFile>src/test/resources/TestNGRunRegressionTest.xml</suiteXmlFile>
+							</suiteXmlFiles>
+							<argLine>
+								-javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+							</argLine>
+							<!-- Remember to set the testFailureIgnore set to true if you want 
+								to run cucumber.jvm.parallel.JSReportMergerer even if some of the tests failed. -->
+							<testFailureIgnore>true</testFailureIgnore>
+							<parallel>methods</parallel>
+							<useUnlimitedThreads>true</useUnlimitedThreads>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>org.aspectj</groupId>
+								<artifactId>aspectjweaver</artifactId>
+								<version>${aspectj.version}</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+			<reporting>
+				<excludeDefaults>true</excludeDefaults>
+				<plugins>
+					<plugin>
+						<groupId>ru.yandex.qatools.allure</groupId>
+						<artifactId>allure-maven-plugin</artifactId>
+						<version>2.5</version>
+						<configuration>
+							<reportDirectory> ${project.build.directory}/site/allure-results</reportDirectory>
+
+							<!-- <resultsDirectory></resultsDirectory> -->
+
+						</configuration>
+
+					</plugin>
+				</plugins>
+			</reporting>
+		</profile>
+		<profile>
+			<id>android</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<environmentVariables>
+								<XTC_PLATFORM>android</XTC_PLATFORM>
+							</environmentVariables>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>ios</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<environmentVariables>
+								<XTC_PLATFORM>ios</XTC_PLATFORM>
+							</environmentVariables>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>ios-simulator</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<environmentVariables>
+								<XTC_PLATFORM>ios-simulator</XTC_PLATFORM>
+							</environmentVariables>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>prepare-for-upload</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<version>2.10</version>
+						<executions>
+							<execution>
+								<id>copy-dependencies</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-dependencies</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}/upload/dependency-jars/</outputDirectory>
+									<useRepositoryLayout>true</useRepositoryLayout>
+									<copyPom>true</copyPom>
+									<addParentPoms>true</addParentPoms>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-help-plugin</artifactId>
+						<version>2.2</version>
+						<executions>
+							<execution>
+								<id>generate-pom</id>
+								<phase>package</phase>
+								<goals>
+									<goal>effective-pom</goal>
+								</goals>
+								<configuration>
+									<output>${project.build.directory}/upload/pom.xml</output>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>copy-testclasses</id>
+								<phase>package</phase>
+								<goals>
+									<goal>testResources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}/upload/test-classes</outputDirectory>
+									<resources>
+										<resource>
+											<directory>
+												${project.build.testOutputDirectory}
+											</directory>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-jvm-deps</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.saucelabs</groupId>
+			<artifactId>saucerest</artifactId>
+			<version>1.0.44</version>
+		</dependency>
+		<dependency>
+			<groupId>com.saucelabs</groupId>
+			<artifactId>saucerest</artifactId>
+			<version>1.0.44</version>
+		</dependency>
+		<dependency>
+			<groupId>com.saucelabs</groupId>
+			<artifactId>saucerest</artifactId>
+			<version>1.0.44</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.11</version>
+		</dependency>
+
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-testng</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>3.141.59</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.appium</groupId>
+			<artifactId>java-client</artifactId>
+			<version>7.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>xml-apis</artifactId>
+					<groupId>xml-apis</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>xml-apis</artifactId>
+					<groupId>xml-apis</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<!-- Required by JSONReportMerger -->
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+		<!-- Below jars are for pretty reporting -->
+		<dependency>
+			<groupId>com.github.mkolisnyk</groupId>
+			<artifactId>cucumber-reports</artifactId>
+			<version>1.0.5</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>xml-apis</artifactId>
+					<groupId>xml-apis</groupId>
+				</exclusion>
+				<exclusion>
+					<groupId>batik</groupId>
+					<artifactId>batik-transcoder</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.github.mkolisnyk/cucumber-reports -->
+		<!-- <dependency> <groupId>com.github.mkolisnyk</groupId> <artifactId>cucumber-reports</artifactId> 
+			<version>1.3.5</version> <type>pom</type> </dependency> -->
+
+		<!-- Added for JIRA Integration -->
+
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>1.19.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-core</artifactId>
+			<version>1.19.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+
+		<!-- Seetest Dependency -->
+
+		<!-- <dependency> <groupId>com.experitest</groupId> <artifactId>seetest-client</artifactId> 
+			<version>11.0</version> </dependency> -->
+
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.12.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>xml-apis</artifactId>
+					<groupId>xml-apis</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>3.0.2</version>
+			<scope>test</scope>
+		</dependency>
+
+
+		<!-- Allure reporting -->
+		<dependency>
+			<groupId>ru.yandex.qatools.allure</groupId>
+			<artifactId>allure-cucumber-jvm-adaptor</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ru.yandex.qatools.allure</groupId>
+			<artifactId>allure-core</artifactId>
+			<version>${allure.version}</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>ru.yandex.qatools.allure</groupId>
+			<artifactId>allure-java-aspects</artifactId>
+			<version>${allure.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>ru.yandex.qatools.allure</groupId>
+			<artifactId>allure-commons</artifactId>
+			<version>${allure.version}</version>
+			<type>jar</type>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
+		</dependency>
+		<dependency>
+			<groupId>com.rallydev.rest</groupId>
+			<artifactId>rally-rest-api</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+		<!-- http://repo1.maven.org/maven2/commons-lang/commons-lang/2.6/commons-lang-2.6.jar -->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.jayway.jsonpath/json-path -->
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.jayway.jsonpath/json-path -->
+		<!-- https://mvnrepository.com/artifact/net.minidev/json-smart -->
+		<dependency>
+			<groupId>net.minidev</groupId>
+			<artifactId>json-smart</artifactId>
+			<version>2.3</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.26</version>
+		</dependency>
+
+
+
+		<!-- for excel -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.12</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.9</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>xml-apis</artifactId>
+					<groupId>xml-apis</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+			<version>3.9</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.xmlbeans</groupId>
+					<artifactId>xmlbeans</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-scratchpad</artifactId>
+			<version>3.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>ooxml-schemas</artifactId>
+			<version>1.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.xmlbeans</groupId>
+					<artifactId>xmlbeans</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>openxml4j</artifactId>
+			<version>1.0-beta</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<version>7.0.0.jre8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.relevantcodes</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>2.41.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>2.3.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>2.3.2</version>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,65 @@
+[
+	{
+		"testdata": {
+			"URL": "http://htappd01682.qcorpaa.aa.com:8090",
+			"qaCloudURL": "https://pilot-dotc-nextgen-test.aa.com/#/home",
+			"qaURL": "https://pilot-dotc.qa.qcorpaa.aa.com",
+			"uatURL": "https://pilot-dotc.uat.qcorpaa.aa.com",
+			"stageURL": "https://pilot-dotc.stg.aa.com",
+			"stageCloudURL":"https://pilot-dotc-nextgen-stage.aa.com",
+			"csqaURL": "https://crewscheduler-qa.qcorpaa.aa.com/DOTC/crewscheduler/index.html",
+			"csUatURL": "https://crewscheduler-uat.qcorpaa.aa.com/DOTC/crewscheduler/home",
+			"csStageURL": "https://crewscheduler-stage.aa.com/DOTC/crewscheduler/home",
+			"qaItAdminId": "277843",
+			"qaItAdminPass": "DXCoct@22",
+			"qaPilotAdminId": "277843",
+			"qaPilotAdminPass": "DXCoct@22",
+			"qaItAdminId2": "277843",
+			"qaItAdminPass2": "DXCoct@22",
+			"qaPilotAdminId2": "277843",
+			"qaPilotAdminPass2": "DXCoct@22",
+			"qaCrewId": "277843",
+			"qaCrewPass": "DXCoct@22",
+			"stageItAdminId": "277843",
+			"stageItAdminPass": "ThisOct@22",
+			"stagePilotAdminId": "277843",
+			"stagePilotAdminPass": "ThisOct@22",
+			"stageItAdminId2": "277843",
+			"stageItAdminPass2": "ThisOct@22",
+			"stagePilotAdminId2": "277843",
+			"stagePilotAdminPass2": "ThisOct@22",
+			"stageCrewId": "277843",
+			"stageCrewPass": "ThisOct@22",
+			"Base": "DFW",
+			"source": "TDEC",
+			"basicAuth": "Basic UzEwODc2NzI6NFNFUSpSSnpTTlhEQg==",
+			"userStory": "Common",
+			"testCaseId": "CommonTC",
+			"userName": "252621",
+			"password": "MjQwNDBAQWly",
+			"data": [
+				{
+					"Contact_Info": {
+						"Email": "yuba.regmi@aa.com",
+						"Mobile_Phone": "123456789",
+						"employeeID": "252621"
+					},
+					"base_data": [
+						{
+							"Base_DFW": {
+								"Position": "D",
+								"Equipment": "787",
+								"Base": "DFW"
+							},
+							"Base_MIA": {
+								"Position": "D",
+								"Equipment": "787",
+								"Base": "MIA"
+							}
+						}
+					]
+				}
+			]
+		}
+	}
+]

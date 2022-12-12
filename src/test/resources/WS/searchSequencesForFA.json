@@ -1,0 +1,20 @@
+{
+    "airlineCode": "AA",
+    "seqStartFrom": "2022-03-11T00:00:00",
+    "crewType": "P",
+    "includePositions": [
+        "CA"
+    ],
+    "base": "CLT",
+    "contractMonth": "MAR2022",
+    "pureDomestic": "false",
+    "includeEquipments": [
+        "320"
+    ],    
+    "checkEquipmentAtSequenceLevelOnly": "true",
+    "ignoreSignInAndDebriefTimes": "true",
+    "includeTrainingSequence": "false",
+    "includeDutyPeriods": "true",
+    "excludeSatellites": "false",
+    "openSequenceOnly": "false"
+}

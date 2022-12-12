@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="DOTC Smoke Test" parallel="tests" verbose="2"
+	configfailurepolicy="continue" thread-count="100">
+	<listeners>
+		<listener
+			class-name="com.DOTC.supportLibraries.AnnotationTransformer" />
+		<listener class-name="com.DOTC.supportLibraries.TestListener" />
+		<listener
+			class-name="com.DOTC.supportLibraries.WebDriverListener" />
+	</listeners>
+	<test name="List1 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.Calendar_activity" />
+		</classes>
+	</test>
+	<test name="List3 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.BallotSequence" />
+		</classes>
+	</test>
+	<test name="List4 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.US1268416_Calendar" />
+		</classes>
+	</test>
+	<test name="List5 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.US1268475_Duplicateballots" />
+		</classes>
+	</test>
+	<test name="List6 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.US1272281_emulate" />
+		</classes>
+	</test>
+	<test name="List7 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.US1272303_cal_MyInfo" />
+		</classes>
+	</test>
+	<test name="List8 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.US1274720_cal_CalInfo" />
+		</classes>
+	</test>
+	<test name="List9 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.US1274743_search_sequence" />
+		</classes>
+	</test>
+	<test name="List10 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.US1276261_update_ballots" />
+		</classes>
+	</test>
+	<test name="List11 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1278924_TotalCreditValidation" />
+		</classes>
+	</test>
+	<test name="List12 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1279731_SeqSearch_DutyPeriod" />
+		</classes>
+	</test>
+	<test name="List13 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.US1279751_update_ballots" />
+		</classes>
+	</test>
+	<test name="List14 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1279732_DutyPeriodsValidation" />
+		</classes>
+	</test>
+	<test name="List15 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1280149_PremiumBallotValidation" />
+		</classes>
+	</test>
+	<test name="List16 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.US1280175_List" />
+		</classes>
+	</test>
+	<test name="List17 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1280191_Search_OpenTimeList" />
+		</classes>
+	</test>
+	<test name="List18 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.US1329471_Ballots_Edit" />
+		</classes>
+	</test>
+	<test name="List19 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.US1329335_Delete_Ballots" />
+		</classes>
+	</test>
+	<test name="List20 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1329333_EditBallotSameFieldValidation" />
+		</classes>
+	</test>
+	<test name="List21 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1280161_SaveBallotNumberOfCriteria" />
+		</classes>
+	</test>
+	<test name="List22 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1279769_DepartureStationsSequenceValidation" />
+		</classes>
+	</test>
+	<test name="List23 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1279768_DepartureStationsValidation" />
+		</classes>
+	</test>
+	<test name="List24 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1278923_TotalCreditSequenceValidation" />
+		</classes>
+	</test>
+	<test name="List25 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1276225_DepartureDateAndSeqNumValidation" />
+		</classes>
+	</test>
+	<test name="List26 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1276196_Valid_LH_pilot_can_save_specific_sequences_to_ballot" />
+		</classes>
+	</test>
+	<test name="List27 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1276168_Valid_LH_search_sequence_number" />
+		</classes>
+	</test>
+	<test name="List28 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1275092_InclusiveTimeframeValidation" />
+		</classes>
+	</test>
+	<test name="List29 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1275066_Inclusive_Time_Frame_checkbox_works" />
+		</classes>
+	</test>
+	<test name="List30 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1271049_DOTC_Application_URL_can_be_accessed_only_via_SSO" />
+		</classes>
+	</test>
+	<test name="List31 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1278870_SitTimeBallotValidation" />
+		</classes>
+	</test>
+	<test name="List32 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1275099_CrewedSeq" />
+		</classes>
+	</test>
+	<test name="List33 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1272298_calendar_activity_mobile" />
+		</classes>
+	</test>
+	<test name="List35 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1280093_PremiumIconCS" />
+				</classes>
+	</test>
+	<test name="List34 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1345583_SaveBallotWithLayover" />
+		</classes>
+	</test>
+	<test name="List36 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1329482_Edit_and_save_ballot_by_adding_new_search_options" />
+		</classes>
+	</test>
+	<test name="List37 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class
+				name="com.DOTC.TestNGrunners.US1275107_PendingSickIcon" />
+		</classes>
+	</test>
+	<test name="List38 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.US1344609_ValidLHPilotCanSaveBallotWithDepartureTimeAndArrivalTime" />
+		</classes>
+	</test>
+	<test name="List39 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.US1345593_ValidLHPilotSearchSequenceWithCalendarDays" />
+		</classes>
+	</test>
+	
+	<test name="List40 tests">
+		<parameter name="ExecutionMode" value="SAUCELABS" />
+		<classes>
+			<class name="com.DOTC.TestNGrunners.US1345579_SaveBallotWithLegsPerDP_LegsPerSequence_Deadheads" />
+		</classes>
+	</test>
+</suite>

@@ -1,0 +1,15 @@
+{
+  "employeeBidStatus":{
+     "base":"DFW",
+     "division":"I",
+     "equipmentGroup":"777",
+     "seat":"RC"
+   },
+   "airLineCode":"AA",
+   "openSequences":true,
+   "employeeID": 0,
+   "crewedSequences": false,
+   "potentialSick": false,
+   "sitTimeLessThanHours": "",
+   "startDateFrom": ""
+}

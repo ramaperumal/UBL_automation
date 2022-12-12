@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="DOTC Smoke Test" verbose="1"
+	configfailurepolicy="continue" parallel="methods" thread-count="3">
+
+	<listeners>
+		<!-- This TestNG listener takes care of setting up and tearing down the 
+			WebDriver, and it also changes test names in the final TestNG HTML report. -->
+		<listener class-name="com.DOTC.supportLibraries.AnnotationTransformer" />
+		<listener class-name="com.DOTC.supportLibraries.TestListener" />
+		<listener class-name="com.DOTC.supportLibraries.WebDriverListener" />
+		
+		
+	</listeners>
+
+	<!-- Possible Parameters and Values -->
+	<!-- ExecutionMode = LOCAL,REMOTE,MOBILE,PERFECTO,SEETEST,MINT,SAUCELABS -->
+	<!-- MobileExecutionPlatform = ANDROID, IOS, WEB_ANDROID, WEB_IOS -->
+	<!-- BrowserName = CHROME,FIREFOX,INTERNET_EXPLORER -->
+	<!-- DeviceName = "Please give the respective deviceName/UDID" OR ManufacturerName 
+		= Apple etc., ModelName = iPhone 7etc., -->
+	<!-- BrowserVersion ="" (Applicable Only if ExecutionMode is REMOTE or SAUCELABS) -->
+	<!-- Platform =WINDOWS etc., (Applicable Only if ExecutionMode is REMOTE 
+		or SAUCELABS)- -->
+
+	<!-- Web Setup PilotTech -->
+   <test name="Smoke Tests PilotTech-Chrome" parallel="methods" thread-count="3">
+	    <parameter name="ExecutionMode" value="LOCAL" /> 
+	    <parameter name="BrowserName" value="EDGE" />
+	<!-- <parameter name="platform" value="Windows 10"/>
+	<parameter name="BrowserVersion" value="75" /> -->  	    
+	    <classes> 
+	    	<class name="com.DOTC.TestNGrunners.DOTC_SmokeTest" /> 
+	    </classes> 
+	</test>
+	
+	<!-- <test name="Smoke Tests PilotTech-Firefox">
+	    <parameter name="ExecutionMode" value="LOCAL" /> 
+	    <parameter name="BrowserName" value="FIREFOX" />	    
+	    <classes> 
+	    	<class name="com.TTS.TestNGrunners.DOTC_SmokeTest" /> 
+	    </classes> 
+	</test>   -->
+	
+</suite>

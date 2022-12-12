@@ -1,0 +1,135 @@
+@Library('SharedLibrary')
+import groovy.json.JsonSlurper
+
+ 
+
+properties ([
+
+ 
+
+[$class: 'BuildDiscarderProperty',
+
+ 
+
+strategy: [
+
+ 
+
+$class: 'LogRotator',
+
+ 
+
+daysToKeepStr: '5',
+
+ 
+
+numToKeepStr: '5'] ]
+
+ 
+
+]);
+
+ 
+
+timeout(800) {
+    node('windows') {
+        try{
+                def gitBranch='master'
+                def gitRepo='https://ghe.aa.com/AA/Crew_FAPortal.git'
+                def gitCred='e06973c7-0595-43a0-93be-58d63fa298f8'
+                
+                            
+                try{
+                
+                stage('RunTest') {
+                                    bat '''tskill iexplore
+                                    echo 0'''
+                                    bat '''tskill IEDriverServer
+                                    echo 0'''
+                                    bat '''tskill chromedriver
+                                    echo 0'''
+                                    deleteDir()
+                                    //Checkout the code from Automation Staging branch 
+                                    git branch: "${gitBranch}", credentialsId: "${gitCred}", url: "${gitRepo}"
+                                    
+                                 
+
+ 
+
+
+                                  //  withMaven(maven:'win-Maven339', jdk: 'win-jdk180', mavenLocalRepo: '.repository')
+                                
+                                       // bat "mvn test -Dwebdriver.ie.driver=./IEDriverServer.exe"
+                                      bat "mvn clean install test -DsuiteXmlFile=testngSuite.xml -Dwebdriver.ie.driver=./IEDriverServer.exe"  
+                                  
+                                    publishHTML(target: [allowMissing: true, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'target/surefire-reports/html', reportFiles: '*', reportName: "Extent_Report"])
+                                     emailext attachmentsPattern: 'target/surefire-reports/html/*',body: "Check CloudBees Jenkins console output at ${env.BUILD_URL} to view the results.<br></br> ", mimeType: 'text/html', subject: "${env.JOB_NAME}", to:'anantkumar.naduvinamani@aa.com,umadevi.goudar@aa.com,randhir.vasanth@aa.com,Harshitha.K@aa.com,Ramya.parvathi.Easwaran@aa.com'
+                                    //archiveArtifacts artifacts: 'target/surefire-reports/html', excludes: null
+                }
+                
+            //    checkpoint('RunTest')
+                
+                stage('Notifier'){
+                    echo "*****Notify*****"
+                    BUILD_DETAILS = "<BR>Job Name: ${env.JOB_NAME} <BR>Build Number: ${env.BUILD_NUMBER} <BR>Build URL: ${BUILD_URL}"
+                    JOB_CAUSES = edtUtil.getCauses()
+                    DEPLOY_DETAILS = " "
+                     MESSAGE="<BR>BUILD DETAILS: " + this.BUILD_DETAILS + "<BR>BUILD STATUS: " + this.currentBuild.currentResult + "<BR>BUILD CAUSE: " + this.JOB_CAUSES + "<BR>DEPLOY DETAILS: " + this.DEPLOY_DETAILS
+                    script {
+                        notifyMe {
+                            mode="slackAndEmail"
+                            //emailTo=this.NOTIFYUSERS
+                            //subj="JENKINS JOB REPORT FOR " + this.APPLICATION_NAME + " - " + this.currentBuild.currentResult
+                            slackChannel="faexp-automation-results"
+                           message=this.MESSAGE
+                            statusColor=""
+                            token="nlOjbEd4em0z3FbCIRTN8VGN"
+                            extendedEmail='false'
+                        }
+                    }
+                        //step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients:'anantkumar.naduvinamani@aa.com', sendToIndividuals: true])
+                    //currentBuild.result = "Success"
+                    //emailext attachmentsPattern: 'target/surefire-reports/htm/*',body: "Check CloudBees Jenkins console output at ${env.BUILD_URL} to view the results.<br></br> ", mimeType: 'text/html', subject: "${env.JOB_NAME}", to:'randhir.vasanth@aa.com'
+                   // echo "Status mail: ${currentBuild.result}"
+                  office365ConnectorSend color: '#800000', message: this.MESSAGE, status: this.currentBuild.currentResult , webhookUrl: 'https://outlook.office.com/webhook/eb4a58f8-0c3f-4784-a46d-07448d275c7c@49793faf-eb3f-4d99-a0cf-aef7cce79dc1/JenkinsCI/db4a9a15ed0248428f880de0bb66808f/1195f17b-93d1-4349-a9cd-5357c617d6d0'  
+            }
+                
+            checkpoint 'Notifier'
+        
+                } catch (err1) {
+                    bat '''tskill iexplore
+                    echo 0'''
+                    bat '''tskill IEDriverServer
+                    echo 0'''
+                    bat '''tskill chromedriver
+                    echo 0'''
+                    //deleteDir()
+                    echo "Failed: ${err1}"
+                    throw err1
+                }
+        
+        } catch (err) {
+                bat '''tskill iexplore
+                echo 0'''
+                bat '''tskill IEDriverServer
+                echo 0'''
+                bat '''tskill chromedriver
+                echo 0'''
+                //deleteDir()
+                echo "Failed: ${err}"
+                currentBuild.result = "Failure"
+                                echo "Status in catch: ${currentBuild.result}"
+                                emailext attachmentsPattern: '**/Execution_Report/*.*',body: "Check CloudBees Jenkins console output at ${env.BUILD_URL} to view the results.<br></br> ", mimeType: 'text/html', subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - ${currentBuild.result}", to:'anantkumar.naduvinamani@aa.com,umadevi.goudar@aa.com,randhir.vasanth@aa.com,Harshitha.K@aa.com,Ramya.parvathi.Easwaran@aa.com'
+                                echo "Status mail: ${currentBuild.result}"
+                                emailext attachLog: true, body: "Check console output at ${env.BUILD_URL} to view the results.<br></br> ", mimeType: 'text/html', subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - ${currentBuild.result}", to:'anantkumar.naduvinamani@aa.com'                    
+                                  publishHTML(target: [allowMissing: true, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'target/surefire-reports/html', reportFiles: '*', reportName: "Extent_Report"])
+                                     emailext attachmentsPattern: 'target/surefire-reports/html/*',body: "Check CloudBees Jenkins console output at ${env.BUILD_URL} to view the results.<br></br> ", mimeType: 'text/html', subject: "${env.JOB_NAME}", to:'anantkumar.naduvinamani@aa.com,umadevi.goudar@aa.com,randhir.vasanth@aa.com,Harshitha.K@aa.com,Ramya.parvathi.Easwaran@aa.com'
+                    
+                                throw err
+               
+
+ 
+
+        }
+    }
+}

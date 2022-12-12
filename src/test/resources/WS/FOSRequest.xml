@@ -1,0 +1,34 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:oas="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:soap="http://www.aa.com/Services/SOAPHeaders" xmlns:gen="http://flighthub.aa.com/Services/GenericFosRequest">
+    <soapenv:Header>
+        <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+            <wsse:UsernameToken wsu:Id="UsernameToken-24" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+                <wsse:Username>S1087672</wsse:Username>
+                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">4SEQ*RJzSNXDB</wsse:Password>
+                <wsse:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary"></wsse:Nonce>
+            </wsse:UsernameToken>
+        </wsse:Security>
+        <soap:RequestContextHeader>
+            <ClientID>PilotTTS-TDEC</ClientID>
+            <ClientTransactionID>PilotTTS-TDEC</ClientTransactionID>
+            <ProcessingDirectives>
+                <!--Optional:-->
+                <Timeout>PT60S</Timeout>
+                <!--Optional:-->
+                <ProcessingMode>Sync</ProcessingMode>
+                <ReturnProcessingNodesHeader>true</ReturnProcessingNodesHeader>
+            </ProcessingDirectives>
+        </soap:RequestContextHeader>
+    </soapenv:Header>
+    <soapenv:Body>
+        <gen:GenericFosRequest conversational="No" SourceSystem="FlightHub" SourceTimeStamp="2014-06-11T00:00:00">
+            <Acknowledgment>All</Acknowledgment>
+            <Credentials>
+                <Alias>triptrade</Alias>
+            </Credentials>
+            <Request>
+                <PartitionCode>AA</PartitionCode>
+                <Entry>7h/604555/320/FO/16FEB/30.30$EC$ET</Entry>
+            </Request>
+        </gen:GenericFosRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
