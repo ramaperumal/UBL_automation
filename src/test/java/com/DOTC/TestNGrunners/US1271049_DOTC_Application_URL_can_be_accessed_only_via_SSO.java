@@ -33,7 +33,7 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
 
 
 @CucumberOptions(
-		 features = "src/test/resources/features/US1271049_DOTC_Application_URL_can_be_accessed_only_via_SSO.feature", glue = { "com.DOTC.stepDefinitions" },
+		 features = "src/test/resources/features/SSO/US1271049_DOTC_Application_URL_can_be_accessed_only_via_SSO.feature", glue = { "com.DOTC.stepDefinitions" },
 						monochrome = true,  plugin = { "pretty", "pretty:target/cucumber-report/Smoke/pretty.txt",
 						"html:target/cucumber-report/Smoke", "json:target/cucumber-report/Smoke/cucumber.json",
 						"junit:target/cucumber-report/Smoke/cucumber-junitreport.xml",

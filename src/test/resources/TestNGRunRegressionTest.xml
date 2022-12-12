@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="DOTC Smoke Test" verbose="1"
-	configfailurepolicy="continue" parallel="methods" thread-count="3">
+	configfailurepolicy="continue" parallel="methods" thread-count="10">
 
 	<listeners>
 		<!-- This TestNG listener takes care of setting up and tearing down the 
@@ -24,14 +24,16 @@
 		or SAUCELABS)- -->
 
 	<!-- Web Setup PilotTech -->
-   <test name="Smoke Tests PilotTech-Chrome" parallel="methods" thread-count="3">
+   <test name="Smoke Tests PilotTech-Chrome">
 	    <parameter name="ExecutionMode" value="LOCAL" /> 
 	    <parameter name="BrowserName" value="EDGE" />
 	<!-- <parameter name="platform" value="Windows 10"/>
 	<parameter name="BrowserVersion" value="75" /> -->  	    
 	    <classes> 
 	    	<class name="com.DOTC.TestNGrunners.DOTC_SmokeTest" /> 
-	    </classes> 
+	    	<class name="com.DOTC.TestNGrunners.US1271049_DOTC_Application_URL_can_be_accessed_only_via_SSO" />
+	    	<class name="com.DOTC.TestNGrunners.US1268475_Duplicateballots" /> 
+	    </classes>
 	</test>
 	
 	<!-- <test name="Smoke Tests PilotTech-Firefox">

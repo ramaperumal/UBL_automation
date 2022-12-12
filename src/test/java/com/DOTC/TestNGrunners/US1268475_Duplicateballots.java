@@ -33,7 +33,7 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
 
 
 @CucumberOptions(
-		 features = "src/test/resources/features/US1268475_Duplicateballots.feature", glue = { "com.DOTC.stepDefinitions" },
+		 features = "src/test/resources/features/Ballot/US1268475_Duplicateballots.feature", glue = { "com.DOTC.stepDefinitions" },
 						monochrome = true, plugin = { "pretty", "pretty:target/cucumber-report/Smoke/pretty.txt", //tags= {"@abc"}, 
 						"html:target/cucumber-report/Smoke", "json:target/cucumber-report/Smoke/cucumber.json",
 						"junit:target/cucumber-report/Smoke/cucumber-junitreport.xml",
