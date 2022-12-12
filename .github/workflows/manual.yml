@@ -10,11 +10,12 @@ on:
       environment:        
         description: 'Environment'
         required: true
-        default: 'QA'
+        default: 'STAGE CLOUD'
         type: choice
         options:
           - QA
           - QA CLOUD
+          - STAGE CLOUD
           - UAT
           - STAGE
           - DEV
